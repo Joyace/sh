@@ -4,7 +4,7 @@ export PATH
 #=================================================
 #       System Required: CentOS/Debian/Ubuntu
 #       Description: Caddy Install
-#       Version: 1.0.6
+#       Version: 1.0.7
 #       Author: Toyo
 #       Blog: https://doub.io/shell-jc1/
 #=================================================
@@ -40,7 +40,13 @@ Download_caddy(){
 	PID=$(ps -ef |grep "caddy" |grep -v "grep" |grep -v "init.d" |grep -v "service" |grep -v "caddy_install" |awk '{print $2}')
 	[[ ! -z ${PID} ]] && kill -9 ${PID}
 	[[ -e "caddy_linux*.tar.gz" ]] && rm -rf "caddy_linux*.tar.gz"
-	[[ ! -z ${extension} ]] && extension_all="?plugins=${extension}"
+	
+	if [[ ! -z ${extension} ]]; then
+		extension_all="?plugins=${extension}&license=personal"
+	else
+		extension_all="?license=personal"
+	fi
+	
 	if [[ ${bit} == "i386" ]]; then
 		wget --no-check-certificate -O "caddy_linux.tar.gz" "https://caddyserver.com/download/linux/386${extension_all}" && caddy_bit="caddy_linux_386"
 	elif [[ ${bit} == "i686" ]]; then
@@ -87,7 +93,11 @@ install_caddy(){
 	fi
 	Download_caddy
 	Service_caddy
-	echo && echo -e " Caddy 配置文件：${caddy_conf_file} \n 使用说明：service caddy start | stop | restart | status \n ${Info_font_prefix}[信息]${Font_suffix} Caddy 安装完成！" && echo
+	echo && echo -e " Caddy 配置文件：${caddy_conf_file}
+ Caddy 日志文件：/tmp/caddy.log
+ 使用说明：service caddy start | stop | restart | status
+ 或者使用：/etc/init.d/caddy start | stop | restart | status
+ ${Info_font_prefix}[信息]${Font_suffix} Caddy 安装完成！" && echo
 }
 uninstall_caddy(){
 	check_installed_status
@@ -102,6 +112,7 @@ uninstall_caddy(){
 		else
 			update-rc.d -f caddy remove
 		fi
+		[[ -s /tmp/caddy.log ]] && rm -rf /tmp/caddy.log
 		rm -rf ${caddy_file}
 		rm -rf ${caddy_conf_file}
 		rm -rf /etc/init.d/caddy
