@@ -37,7 +37,7 @@ cat << EOF >$dir2/ss80.json
         "8080":{"password":"whatthefuck@.@", "protocol":"auth_aes128_sha1", "protocol_param": "2#$all", "obfs":"http_simple", "obfs_param":""}
     },
     "timeout":600,
-    "method":"chacha20",
+    "method":"chacha20-ietf",
     "protocol": "auth_sha1_compatible",
     "protocol_param": "",
     "obfs": "http_simple_compatible",
