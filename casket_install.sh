@@ -40,14 +40,15 @@ check_installed_status(){
 Download_casket(){
 	PID=$(ps -ef |grep "casket" |grep -v "grep" |grep -v "init.d" |grep -v "service" |grep -v "casket_install" |awk '{print $2}')
 	[[ ! -z ${PID} ]] && kill -9 ${PID}
-        [[ -e "casket_linux*.tar.gz" ]] && rm -rf "casket_linux*.tar.gz"
+    [[ -e "casket_linux*.tar.gz" ]] && rm -rf "casket_linux*.tar.gz"
 
-        wget -N --no-check-certificate -O "casket_linux.tar.gz" "https://github.com/tmpim/casket/releases/download/v1.1.5/casket_1.1.5_linux_amd64.tar.gz"
+    wget -N --no-check-certificate -O "casket_linux.tar.gz" "https://github.com/tmpim/casket/releases/download/v1.1.5/casket_1.1.5_linux_amd64.tar.gz"
 
 	[[ ! -e "casket_linux.tar.gz" ]] && echo -e "${Error_font_prefix}[错误]${Font_suffix} casket 下载失败 !" && exit 1
 	tar zxf "casket_linux.tar.gz"
 	rm -rf "casket_linux.tar.gz"
-	[[ ! -e ${casket_file} ]] && echo -e "${Error_font_prefix}[错误]${Font_suffix} casket 解压失败或压缩文件错误 !" && exit 1
+	[[ ! -e casket ]] && echo -e "${Error_font_prefix}[错误]${Font_suffix} casket 解压失败或压缩文件错误 !" && exit 1
+	mv casket ${casket_file}
 	rm -rf LICENSES.txt
 	rm -rf README.txt 
 	rm -rf CHANGES.txt
