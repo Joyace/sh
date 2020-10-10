@@ -46,7 +46,7 @@ Download_casket(){
         wget -N --no-check-certificate "https://raw.githubusercontent.com/Joyace/shell/master/casket-1.1.5-with-webdav.zip"
 
 	[[ ! -e "casket-1.1.5-with-webdav.zip" ]] && echo -e "${Error_font_prefix}[错误]${Font_suffix} casket 下载失败 !" && exit 1
-	unzip casket-1.1.5-with-webdav.zip -d /usr/local/casket/casket
+	unzip casket-1.1.5-with-webdav.zip -d /usr/local/casket
 	rm -rf "casket-1.1.5-with-webdav.zip"
 	[[ ! -e ${casket_file}/casket-1.1.5-with-webdav ]] && echo -e "${Error_font_prefix}[错误]${Font_suffix} casket 解压失败或压缩文件错误 !" && exit 1
 	chmod +x ${casket_file}/casket
