@@ -42,18 +42,14 @@ Download_casket(){
 	[[ ! -z ${PID} ]] && kill -9 ${PID}
     [[ -e "casket_linux*.tar.gz" ]] && rm -rf "casket_linux*.tar.gz"
 
-    wget -N --no-check-certificate -O "casket_linux.tar.gz" "https://github.com/tmpim/casket/releases/download/v1.1.5/casket_1.1.5_linux_amd64.tar.gz"
+    #wget -N --no-check-certificate -O "casket_linux.tar.gz" "https://github.com/tmpim/casket/releases/download/v1.1.5/casket_1.1.5_linux_amd64.tar.gz"
+    wget -N --no-check-certificate "https://raw.githubusercontent.com/Joyace/shell/master/casket-1.1.5-with-webdav.zip"
 
-	[[ ! -e "casket_linux.tar.gz" ]] && echo -e "${Error_font_prefix}[错误]${Font_suffix} casket 下载失败 !" && exit 1
-	tar zxf "casket_linux.tar.gz"
-	rm -rf "casket_linux.tar.gz"
-	[[ ! -e casket ]] && echo -e "${Error_font_prefix}[错误]${Font_suffix} casket 解压失败或压缩文件错误 !" && exit 1
-	mv casket ${casket_file}
-	rm -rf LICENSES.txt
-	rm -rf README.txt 
-	rm -rf CHANGES.txt
-	rm -rf "init/"
-	chmod +x casket
+	[[ ! -e "casket-1.1.5-with-webdav.zip" ]] && echo -e "${Error_font_prefix}[错误]${Font_suffix} casket 下载失败 !" && exit 1
+	unzip casket-1.1.5-with-webdav.zip -d /usr/local/casket/casket
+	rm -rf "casket-1.1.5-with-webdav.zip"
+	[[ ! -e ${casket_file}/casket-1.1.5-with-webdav ]] && echo -e "${Error_font_prefix}[错误]${Font_suffix} casket 解压失败或压缩文件错误 !" && exit 1
+	chmod +x ${casket_file}/casket
 }
 Service_casket(){
 	if [[ ${release} = "centos" ]]; then
