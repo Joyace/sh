@@ -40,9 +40,9 @@ check_installed_status(){
 Download_casket(){
 	PID=$(ps -ef |grep "casket" |grep -v "grep" |grep -v "init.d" |grep -v "service" |grep -v "casket_install" |awk '{print $2}')
 	[[ ! -z ${PID} ]] && kill -9 ${PID}
-    [[ -e "casket_linux*.tar.gz" ]] && rm -rf "casket_linux*.tar.gz"
+        [[ -e "casket_linux*.tar.gz" ]] && rm -rf "casket_linux*.tar.gz"
 
-    wget -N --no-check-certificate -O "casket_linux.tar.gz" "https://github.com/tmpim/casket/releases/download/v1.1.5/casket_1.1.5_linux_amd64.tar.gz"
+        wget -N --no-check-certificate -O "casket_linux.tar.gz" "https://github.com/tmpim/casket/releases/download/v1.1.5/casket_1.1.5_linux_amd64.tar.gz"
 
 	[[ ! -e "casket_linux.tar.gz" ]] && echo -e "${Error_font_prefix}[错误]${Font_suffix} casket 下载失败 !" && exit 1
 	tar zxf "casket_linux.tar.gz"
@@ -56,14 +56,14 @@ Download_casket(){
 }
 Service_casket(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/service/casket_centos -O /etc/init.d/casket; then
+		if ! wget --no-check-certificate https://raw.githubusercontent.com/Joyace/shell/master/service/casket_centos -O /etc/init.d/casket; then
 			echo -e "${Error_font_prefix}[错误]${Font_suffix} casket服务 管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/casket
 		chkconfig --add casket
 		chkconfig casket on
 	else
-		if ! wget --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubiBackup/doubi/master/service/casket_debian -O /etc/init.d/casket; then
+		if ! wget --no-check-certificate https://raw.githubusercontent.com/Joyace/shell/master/service/casket_debian -O /etc/init.d/casket; then
 			echo -e "${Error_font_prefix}[错误]${Font_suffix} casket服务 管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/casket
